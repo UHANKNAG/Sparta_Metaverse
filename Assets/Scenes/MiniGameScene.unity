@@ -5541,6 +5541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWaveIndex: 0
   uiManager: {fileID: 1365256490}
+  scoreText: {fileID: 1560070236}
   currentScore: 0
   bestScore: 0
 --- !u!1 &2083593318

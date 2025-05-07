@@ -25,8 +25,6 @@ public class DungeonDoor : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        
-
         // Player의 Layer: 6
         if(other.gameObject.layer == 6) {
             animator.SetTrigger(IsEnter);

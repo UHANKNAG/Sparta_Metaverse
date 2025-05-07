@@ -6004,7 +6004,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWaveIndex: 0
   uiManager: {fileID: 0}
+  scoreText: {fileID: 0}
   currentScore: 0
+  bestScore: 0
 --- !u!4 &632297834
 Transform:
   m_ObjectHideFlags: 0

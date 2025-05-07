@@ -10,6 +10,7 @@ public class GameUI : BaseUI
     [SerializeField] private Slider hpSlider;
 
     private void Start() {
+        GameManager.Instance.StartGame();
         UpdateHPSlider(1);
     }
 

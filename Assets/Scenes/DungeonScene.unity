@@ -5839,6 +5839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWaveIndex: 0
+  uiManager: {fileID: 0}
+  currentScore: 0
 --- !u!4 &632297834
 Transform:
   m_ObjectHideFlags: 0
@@ -6040,6 +6042,7 @@ MonoBehaviour:
   weaponPivot: {fileID: 451188684}
   KnockbackDuration: 0
   WeaponPrefab: {fileID: 3345117782459519376, guid: 52bc3a1f59d8d3c42a2c9bd898043463, type: 3}
+  mainCamera: {fileID: 519420031}
 --- !u!114 &727342351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10521,6 +10524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978f47ed2b415a545a4355a04a857d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  restartText: {fileID: 0}
 --- !u!114 &1706197830
 MonoBehaviour:
   m_ObjectHideFlags: 0

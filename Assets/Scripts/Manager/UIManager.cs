@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor.SearchService;
@@ -10,14 +11,17 @@ using UnityEngine.XR;
 public enum UIState {
     Home,
     Game,
-    GameOver
+    GameOver,
+    Score
 }
 
 public class UIManager : MonoBehaviour
 {
+    GameManager gameManager = GameManager.Instance;
     HomeUI homeUI;
     GameUI gameUI;
     GameOverUI gameOverUI;
+    ScoreUI scoreUI;
 
     private UIState currentState;
 
@@ -32,10 +36,14 @@ public class UIManager : MonoBehaviour
             gameUI.Init(this);
             gameOverUI = GetComponentInChildren<GameOverUI>(true);
             gameOverUI.Init(this);
-        
+
             ChangeState(UIState.Game);
         }
         
+        if (SceneManager.GetActiveScene().name == "MiniGameScene") {
+            scoreUI = GetComponentInChildren<ScoreUI>(true);
+            scoreUI?.Init(this);
+        }  
     }
 
     void Start()
@@ -73,15 +81,36 @@ public class UIManager : MonoBehaviour
     public void ChangeState(UIState state) {
         currentState = state;
         // homeUI.SetActive(currentState);
-        gameUI.SetActive(currentState);
-        gameOverUI.SetActive(currentState);
+        if (SceneManager.GetActiveScene().name == "DungeonScene") {
+            gameUI.SetActive(currentState);
+            gameOverUI.SetActive(currentState);
+        }
+        
+        if (SceneManager.GetActiveScene().name == "MiniGameScene")
+            scoreUI?.SetActive(currentState);
     }
 
     public void SetRestart() {
-        restartText.gameObject.SetActive(true);
+        
+        scoreUI.gameObject.SetActive(true);
     }
 
     public void UpdateScore(int score) {
         scoreText.text = score.ToString();
+    }
+
+    public void SetScoreUI(int currentScore, int BestScore)
+    {
+        scoreUI.SetUI(currentScore, BestScore);
+        ChangeState(UIState.Score);
+    }
+
+    public void OnClickStart() {
+        gameManager.RestartGame();
+        ChangeState(UIState.Game);
+    }
+
+    public void OnClickExit() {
+        SceneManager.LoadScene("MainScene");
     }
 }

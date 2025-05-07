@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : BaseController
 {
-    private Camera camera;
+    [SerializeField] private Camera mainCamera;
     private GameManager gameManager;
 
     public void Init(GameManager gameManager) {
         this.gameManager = gameManager;
-        camera = Camera.main;
+        // mainCamera = Camera.main;
     }
 
     protected override void HandleAction() {
@@ -40,7 +40,7 @@ public class PlayerController : BaseController
 
         // mouse 좌표는 해상도 좌표고
         // 그 해상도 좌표를 우리가 원하는 world 좌표로 바꿔 주는 작업
-        Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
+        Vector2 worldPos = mainCamera.ScreenToWorldPoint(mousePosition);
         lookDirection = (worldPos - (Vector2)transform.position);
 
         if(lookDirection.magnitude < 0.9f) {

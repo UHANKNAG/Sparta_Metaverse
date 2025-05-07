@@ -18,7 +18,12 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public static bool isFirstLoading = true;
 
-    private int currentScore = 0;
+    public GameObject scoreText;
+
+    public int currentScore = 0;
+    public int bestScore = 0;
+    public int BestScore { get => bestScore; }
+    private const string BestScoreKey = "BestScore";
 
     private void Awake() {
         if (Instance == null)
@@ -28,6 +33,7 @@ public class GameManager : MonoBehaviour
 
         gameManager = this;
         uiManager = FindObjectOfType<UIManager>();
+        bestScore = PlayerPrefs.GetInt(BestScoreKey, 0);
 
         if (SceneManager.GetActiveScene().name == "DungeonScene")
         {
@@ -40,6 +46,8 @@ public class GameManager : MonoBehaviour
             _playerResourceController = player.GetComponent<ResourceController>();
             _playerResourceController.RemoveHealthChangeEvent(uiManager.ChangePlayerHP);
             _playerResourceController.AddHealthChangeEvent(uiManager.ChangePlayerHP);
+
+            currentWaveIndex = -1;
         }
     }
 
@@ -59,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     void StartNextWave() {
         currentWaveIndex += 1;
-        enemyManager.StartWave(1 + currentWaveIndex / 5);
+        enemyManager.StartWave(1 + currentWaveIndex / 3);
         uiManager.ChangeWave(currentWaveIndex);
     }
 
@@ -73,7 +81,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void MiniGameOver() {
+        scoreText.SetActive(false);
         uiManager.SetRestart();
+        uiManager.SetScoreUI(currentScore, bestScore);
     }
 
     public void RestartGame() {
@@ -83,6 +93,13 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score) {
         currentScore += score;
         Debug.Log("Score: " + currentScore);
+
+        if(bestScore < currentScore)
+        {
+            bestScore = currentScore;
+            PlayerPrefs.SetInt(BestScoreKey, bestScore);
+        }
+
         uiManager.UpdateScore(currentScore);
     }
 }
